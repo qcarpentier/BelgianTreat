@@ -18,6 +18,12 @@ namespace BelgianTreat.Controllers
         }
 
         [HttpGet("contact")]
+        public IActionResult Contact()
+        {
+            return View();
+        }
+
+        [HttpPost("contact")]
         public IActionResult Contact(ContactViewModel model)
         {
             if (ModelState.IsValid)
