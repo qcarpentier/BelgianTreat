@@ -1,9 +1,4 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace BelgianTreat.Controllers
 {
@@ -13,5 +8,17 @@ namespace BelgianTreat.Controllers
         {
             return View();
         }
+
+        [HttpGet("contact")]
+        public IActionResult Contact()
+        {
+            return View();
+        }
+
+        public IActionResult About()
+        {
+            return View();
+        }
+
     }
 }
