@@ -1,4 +1,5 @@
 ﻿using BelgianTreat.Data.Entities;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
@@ -36,6 +37,23 @@ namespace BelgianTreat.Data
             }
         }
 
+        public IEnumerable<Order> GetAllOrders()
+        {
+            return _ctx.Orders
+                       .Include(o => o.Items)
+                       .ThenInclude(i => i.Product)
+                       .ToList();
+        }
+
+        public Order GetOrderById(int id)
+        {
+            return _ctx.Orders
+                       .Include(o => o.Items)
+                       .ThenInclude(i => i.Product)
+                       .Where(o => o.Id == id)
+                       .FirstOrDefault();
+        }
+
         public IEnumerable<Product> GetProductsByCategory(string category)
         {
             return _ctx.Products
@@ -45,6 +63,7 @@ namespace BelgianTreat.Data
 
         public bool SaveAll()
         {
+            // Check if something changed before saving (> 0)
             return _ctx.SaveChanges() > 0;
         }
     }
