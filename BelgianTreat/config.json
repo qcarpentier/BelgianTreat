@@ -3,7 +3,9 @@
     "BelgianConnectionString": "server=(localdb)\\MSSQLLocalDB;Database=BelgianTreatDb;Integrated Security=true;MultipleActiveResultSets=true"
   },
   "Logging": {
-    "Default": "Information",
-    "Windows": "Warning"
+    "LogLevel": {
+      "Default": "Information",
+      "Windows": "Warning"
+    }
   }
 }

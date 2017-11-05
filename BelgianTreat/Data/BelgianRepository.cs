@@ -66,5 +66,10 @@ namespace BelgianTreat.Data
             // Check if something changed before saving (> 0)
             return _ctx.SaveChanges() > 0;
         }
+
+        public void AddEntity(object model)
+        {
+            _ctx.Add(model);
+        }
     }
 }

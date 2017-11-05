@@ -5,6 +5,7 @@ using BelgianTreat.Services;
 using BelgianTreat.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
+using AutoMapper;
 
 namespace BelgianTreat
 {
@@ -26,6 +27,7 @@ namespace BelgianTreat
                 cfg.UseSqlServer(_config.GetConnectionString("BelgianConnectionString"));
             });
 
+            services.AddAutoMapper();
             services.AddTransient<IMailService, NullMailService>();
             // Support for real mail service 
             // TODO
