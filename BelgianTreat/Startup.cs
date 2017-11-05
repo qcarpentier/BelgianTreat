@@ -29,9 +29,8 @@ namespace BelgianTreat
             services.AddTransient<IMailService, NullMailService>();
             // Support for real mail service 
             // TODO
-
             services.AddTransient<BelgianSeeder>();
-
+            services.AddScoped<IBelgianRepository, BelgianRepository>();
             services.AddMvc();
         }
 
