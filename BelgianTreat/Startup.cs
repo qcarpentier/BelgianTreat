@@ -16,6 +16,7 @@ namespace BelgianTreat
         {
             _config = config;
         }
+
         // This method gets called by the runtime. Use this method to add services to the container.
         // For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=398940
         public void ConfigureServices(IServiceCollection services)
@@ -29,6 +30,8 @@ namespace BelgianTreat
             // Support for real mail service 
             // TODO
 
+            services.AddTransient<BelgianSeeder>();
+
             services.AddMvc();
         }
 
@@ -38,6 +41,13 @@ namespace BelgianTreat
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
+
+                // Seed the db
+                using (var scope = app.ApplicationServices.CreateScope())
+                {
+                    var seeder = scope.ServiceProvider.GetService<BelgianSeeder>();
+                    seeder.Seed();
+                }
             }
             else
             {

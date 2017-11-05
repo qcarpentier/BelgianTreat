@@ -44,6 +44,5 @@ namespace BelgianTreat.Controllers
         {
             return View();
         }
-
     }
 }
