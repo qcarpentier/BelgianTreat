@@ -17,6 +17,9 @@ namespace BelgianTreat.Data
                 // Needed because the member OrderId is not mapped auto
                 .ForMember(o => o.OrderId, ex => ex.MapFrom(o => o.Id))
                 .ReverseMap();
+
+            CreateMap<OrderItem, OrderItemViewModel>()
+                .ReverseMap();
         }
     }
 }
