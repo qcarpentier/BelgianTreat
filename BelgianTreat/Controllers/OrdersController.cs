@@ -27,11 +27,11 @@ namespace BelgianTreat.Controllers
         }
 
         [HttpGet]
-        public IActionResult Get()
+        public IActionResult Get(bool includeItems = true)
         {
             try
             {
-                var results = _repository.GetAllOrders();
+                var results = _repository.GetAllOrders(includeItems);
 
                 return Ok(_mapper.Map<IEnumerable<Order>, IEnumerable<OrderViewModel>>(results));
             }
