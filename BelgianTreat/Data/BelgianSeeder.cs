@@ -1,5 +1,6 @@
 ﻿using BelgianTreat.Data.Entities;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Identity;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
@@ -14,16 +15,38 @@ namespace BelgianTreat.Data
     {
         private readonly BelgianContext _context;
         private readonly IHostingEnvironment _hosting;
+        private readonly UserManager<StoreUser> _userManager;
 
-        public BelgianSeeder(BelgianContext context, IHostingEnvironment hosting)
+        public BelgianSeeder(BelgianContext context, 
+            IHostingEnvironment hosting,
+            UserManager<StoreUser> userManager)
         {
             _context = context;
             _hosting = hosting;
+            _userManager = userManager;
         }
-        public void Seed()
+        public async Task Seed()
         {
             // Double check if the db is created (avoid some critical errors)
             _context.Database.EnsureCreated();
+
+            //var user = await _userManager.FindByEmailAsync("quentin.carpentier@outlook.be");
+            //if(user == null)
+            //{
+            //    user = new StoreUser()
+            //    {
+            //        FirstName = "Quentin",
+            //        LastName = "Carpentier",
+            //        UserName = "quentin.carpentier@outlook.be",
+            //        Email = "quentin.carpentier@outlook.be"
+            //    };
+
+            //    var result = await _userManager.CreateAsync(user, "P@ssw0rd!");
+            //    if (result != IdentityResult.Success)
+            //    {
+            //        throw new InvalidOperationException("Failed to create default user");
+            //    }
+            //}
 
             if (!_context.Products.Any())
             {
@@ -40,6 +63,7 @@ namespace BelgianTreat.Data
                 {
                     OrderDate = DateTime.Now,
                     OrderNumber = "12345",
+                    //User = user,
                     Items = new List<OrderItem>()
                     {
                         new OrderItem()

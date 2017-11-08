@@ -1,6 +1,7 @@
 ﻿using BelgianTreat.Data;
 using BelgianTreat.Services;
 using BelgianTreat.ViewModels;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace BelgianTreat.Controllers
@@ -48,6 +49,7 @@ namespace BelgianTreat.Controllers
             return View();
         }
 
+        [Authorize]
         public IActionResult Shop()
         {
             var results = _repository.GetAllProducts();

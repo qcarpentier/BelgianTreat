@@ -6,6 +6,8 @@ using BelgianTreat.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using AutoMapper;
+using BelgianTreat.Data.Entities;
+using Microsoft.AspNetCore.Identity;
 
 namespace BelgianTreat
 {
@@ -22,6 +24,12 @@ namespace BelgianTreat
         // For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=398940
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddIdentity<StoreUser, IdentityRole>(cfg =>
+            {
+                cfg.User.RequireUniqueEmail = true;
+            })
+                .AddEntityFrameworkStores<BelgianContext>();
+
             services.AddDbContext<BelgianContext>(cfg =>
             {
                 cfg.UseSqlServer(_config.GetConnectionString("BelgianConnectionString"));
@@ -49,7 +57,7 @@ namespace BelgianTreat
                 using (var scope = app.ApplicationServices.CreateScope())
                 {
                     var seeder = scope.ServiceProvider.GetService<BelgianSeeder>();
-                    seeder.Seed();
+                    seeder.Seed().Wait();
                 }
             }
             else

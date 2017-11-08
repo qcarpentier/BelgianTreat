@@ -19,7 +19,7 @@ namespace BelgianTreat
 
         public static IWebHost BuildWebHost(string[] args) =>
             WebHost.CreateDefaultBuilder(args)
-            .ConfigureAppConfiguration(SetupConfiguration)
+                .ConfigureAppConfiguration(SetupConfiguration)
                 .UseStartup<Startup>()
                 .Build();
 

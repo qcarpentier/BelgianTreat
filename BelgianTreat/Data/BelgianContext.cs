@@ -1,4 +1,5 @@
 ﻿using BelgianTreat.Data.Entities;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -8,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace BelgianTreat.Data
 {
-    public class BelgianContext : DbContext
+    public class BelgianContext : IdentityDbContext<StoreUser>
     {
         public BelgianContext(DbContextOptions<BelgianContext> options) : base(options)
         {
