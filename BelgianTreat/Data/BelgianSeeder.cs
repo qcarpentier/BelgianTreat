@@ -30,51 +30,55 @@ namespace BelgianTreat.Data
             // Double check if the db is created (avoid some critical errors)
             _context.Database.EnsureCreated();
 
-            //var user = await _userManager.FindByEmailAsync("quentin.carpentier@outlook.be");
-            //if(user == null)
-            //{
-            //    user = new StoreUser()
-            //    {
-            //        FirstName = "Quentin",
-            //        LastName = "Carpentier",
-            //        UserName = "quentin.carpentier@outlook.be",
-            //        Email = "quentin.carpentier@outlook.be"
-            //    };
+            // Create sample datas
 
-            //    var result = await _userManager.CreateAsync(user, "P@ssw0rd!");
-            //    if (result != IdentityResult.Success)
-            //    {
-            //        throw new InvalidOperationException("Failed to create default user");
-            //    }
-            //}
+            // User
+            var user = await _userManager.FindByEmailAsync("quentin.carpentier@outlook.be");
+            if (user == null)
+            {
+                user = new StoreUser()
+                {
+                    FirstName = "Quentin",
+                    LastName = "Carpentier",
+                    UserName = "quentin.carpentier@outlook.be",
+                    Email = "quentin.carpentier@outlook.be"
+                };
+
+                var result = await _userManager.CreateAsync(user, "P@ssw0rd!");
+                if (result != IdentityResult.Success)
+                {
+                    throw new InvalidOperationException("Failed to create default user");
+                }
+            }
 
             if (!_context.Products.Any())
             {
-                // Create sample datas
-
                 // Products
                 var filePath = Path.Combine(_hosting.ContentRootPath, "Data/sample.json");
                 var json = File.ReadAllText(filePath);
                 var products = JsonConvert.DeserializeObject<IEnumerable<Product>>(json);
                 _context.Products.AddRange(products);
 
-                // Order and OrderItem
-                var order = new Order()
+                if (!_context.Orders.Any())
                 {
-                    OrderDate = DateTime.Now,
-                    OrderNumber = "12345",
-                    //User = user,
-                    Items = new List<OrderItem>()
+                    // Order and OrderItem
+                    var order = new Order()
                     {
-                        new OrderItem()
+                        OrderDate = DateTime.Now,
+                        OrderNumber = "12345",
+                        User = user,
+                        Items = new List<OrderItem>()
                         {
-                            Product = products.First(),
-                            Quantity = 5,
-                            UnitPrice = products.First().Price
+                            new OrderItem()
+                            {
+                                Product = products.First(),
+                                Quantity = 5,
+                                UnitPrice = products.First().Price
+                            }
                         }
-                    }
-                };
-                _context.Orders.Add(order);
+                    };
+                    _context.Orders.Add(order);
+                }
 
                 _context.SaveChanges();
             }

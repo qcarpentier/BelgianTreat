@@ -67,6 +67,8 @@ namespace BelgianTreat
 
             app.UseStaticFiles();
 
+            app.UseAuthentication();
+
             // Configure routes
             app.UseMvc(cfg =>
             {
